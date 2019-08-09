@@ -2,11 +2,11 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 module.exports = {
-  mode: 'production',
-  entry: './src/js/main.js',
+  mode: 'development',
+  entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'chart.bundle.js'
+    filename: '[name].bundle.js'
   },
   module: {
     rules: [{
@@ -20,11 +20,18 @@ module.exports = {
       }
     }]
   },
+  resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js'
+    }
+  },
   plugins: [
-    new HtmlWebpackPlugin({ template: './src/index.html' })
+    new HtmlWebpackPlugin({ template: './public/index.html' })
   ],
   optimization: {
-    minimizer: [new UglifyJsPlugin()],
+    minimizer: [new UglifyJsPlugin({
+      sourceMap: true,
+    })],
   },
   watchOptions: {
     poll: 1000,
