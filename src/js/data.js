@@ -11,6 +11,6 @@ export default {
   datasets: categories.map((cate, i) => ({
     label: cate,
     data: items[i],
-    backgroundColor: new Array(categories.length).fill(backgroundColor[i])
+    backgroundColor: new Array(labels.length).fill(backgroundColor[i])
   }))
 }
