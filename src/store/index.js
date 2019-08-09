@@ -26,6 +26,7 @@ export default new Vuex.Store({
       if (!chartData) {
         return null;
       }
+      const maxIndex = showCategories.length - 1
       let items = groupBy(chartData, '大分類(カテゴリー)')
       Object.keys(items).forEach(k => items[k] = countBy(items[k], '事業部'))
       items = showCategories.map(cate => labels.map(label => items[cate][label] || 0))
@@ -34,7 +35,7 @@ export default new Vuex.Store({
         datasets: showCategories.map((cate, i) => ({
           label: cate,
           data: items[i],
-          backgroundColor: new Array(labels.length).fill(backgroundColor[i])
+          backgroundColor: new Array(labels.length).fill(backgroundColor[maxIndex - i])
         }))
       }
     },

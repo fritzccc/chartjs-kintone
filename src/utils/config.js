@@ -12,7 +12,7 @@ export const backgroundColor = [
   '#007065',
   '#d3f6f3',
   '#ff4463',
-].reverse()
+]
 
 export const categories = [
   '脱Notes',
