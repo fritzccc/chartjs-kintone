@@ -28,7 +28,7 @@ export const categories = [
   '内製支援',
   'AI',
   'その他'
-].reverse()
+]
 
 export const labels = [
   '東１',

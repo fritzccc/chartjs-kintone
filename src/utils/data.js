@@ -1,4 +1,4 @@
-import { data } from '../demo'
+import data from '../demo'
 import { backgroundColor, categories, labels } from './config'
 import { countBy, groupBy } from 'lodash'
 
