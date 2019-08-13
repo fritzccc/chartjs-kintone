@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    chartData: null,
+    chartData: [],
     categories: categories.map(cate => {
       return {
         title: cate,
@@ -23,12 +23,14 @@ export default new Vuex.Store({
         .map(cate => cate.title)
     },
     renderData({ chartData }, { showCategories }) {
-      if (!chartData) {
-        return null;
+      if (!chartData || chartData.length === 0) {
+        return [];
       }
       const maxIndex = showCategories.length - 1
-      let items = groupBy(chartData, '大分類(カテゴリー)')
-      Object.keys(items).forEach(k => items[k] = countBy(items[k], '事業部'))
+      // let items = groupBy(chartData, '大分類(カテゴリー)')
+      let items = groupBy(chartData, '大分類')
+      // Object.keys(items).forEach(k => items[k] = countBy(items[k], '事業部'))
+      Object.keys(items).forEach(k => items[k] = countBy(items[k], 'jigyoubu'))
       items = showCategories.map(cate => labels.map(label => items[cate][label] || 0))
       return {
         labels,

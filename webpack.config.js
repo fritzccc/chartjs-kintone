@@ -1,11 +1,12 @@
 const path = require('path');
+const os = require('os');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.join(os.homedir(), 'Dropbox/kintone/jbcc_business'),
     filename: '[name].bundle.js'
   },
   module: {
@@ -25,13 +26,11 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js'
     }
   },
-  plugins: [
-    new HtmlWebpackPlugin({ template: './public/index.html' })
-  ],
+  // plugins: [
+  //   new HtmlWebpackPlugin({ template: './public/index.html' })
+  // ],
   optimization: {
-    minimizer: [new UglifyJsPlugin({
-      sourceMap: true,
-    })],
+    minimizer: [new UglifyJsPlugin()],
   },
   watchOptions: {
     poll: 1000,

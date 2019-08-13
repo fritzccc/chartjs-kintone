@@ -58,6 +58,13 @@ export const options = {
     bodyFontSize: 11,
     caretSize: 0,
     itemSort: () => -1,
+    callbacks: {
+      title: (tooltipItems, { datasets }) => {
+        const { index, label } = tooltipItems[0]
+        const sum = datasets.reduce((prev, cur) => prev + cur.data[index], 0)
+        return `${label}: 計 ${sum} 件`;
+      }
+    }
   },
   scales: {
     xAxes: [{
