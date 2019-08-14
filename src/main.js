@@ -4,8 +4,9 @@ import OptionPanel from './components/OptionPanel'
 import Chart from 'chart.js'
 import { mapGetters } from 'vuex'
 import { options } from './utils/config'
+import { APPID, VIEWID } from './utils/kintone.env'
 import store from './store'
-// import kintoneUtility from 'kintone-utility'
+import kintoneUtility from 'kintone-utility'
 // for dev
 // import data from './demo'
 
@@ -13,7 +14,8 @@ Chart.Tooltip.positioners.custom = (_, position) => position
 
 try {
   kintone.events.on(['app.record.index.show'], event => {
-    if (event.viewId !== 5735247 ) {
+    if (event.viewId !== VIEWID) {
+      console.warn('current viewId: ', event.viewId);
       return event
     }
     const target = document.querySelector('.kintone-app-header-space')
@@ -26,35 +28,28 @@ try {
     chart.innerHTML = '<canvas id="chart"></canvas>'
     target.appendChild(chart)
     // fetch all data
-    kintoneUtility.rest.getAllRecordsByQuery({
-      app: '517',
-      isGuest: false
-    }).then(({ records }) => {
-      records.forEach(r => Object.keys(r).forEach(k => r[k] = r[k].value))
-      store.commit('setChartData', records)
-      new Vue({
-        store,
-        components: { BarChart, OptionPanel },
-        template: `
-        <div>
-          <OptionPanel />
-          <BarChart
-            style="position: relative; margin: auto; height: 80vh; width: 80vw;"
-            :height="200"
-            :chartData="renderData"
-            :options="options" />
-        </div>
-        `,
-        data() {
-          return {
-            options
-          }
-        },
-        computed: mapGetters(['renderData'])
-      }).$mount('#chart')
-    })
+    kintoneUtility.rest.getAllRecordsByQuery({ app: APPID, isGuest: false })
+      .then(({ records }) => {
+        store.commit('setChartData', records)
+        new Vue({
+          store,
+          components: { BarChart, OptionPanel },
+          template: `
+            <div>
+              <OptionPanel />
+              <BarChart
+                :height="200"
+                :chartData="renderData"
+                :options="options" />
+            </div>
+            `,
+          data() {
+            return { options }
+          },
+          computed: mapGetters(['renderData'])
+        }).$mount('#chart')
+      })
   })
-} catch (error) {
-  // for dev only
-  // store.commit('setChartData', data)
+} catch (err) {
+  console.error(err)
 }

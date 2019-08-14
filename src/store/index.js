@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import countBy from 'lodash/countBy'
+import groupBy from 'lodash/groupBy'
 import { backgroundColor, categories, labels } from '../utils/config'
-import { countBy, groupBy } from 'lodash'
 
 Vue.use(Vuex)
 
@@ -26,12 +27,14 @@ export default new Vuex.Store({
       if (!chartData || chartData.length === 0) {
         return [];
       }
+
       const maxIndex = showCategories.length - 1
-      // let items = groupBy(chartData, '大分類(カテゴリー)')
+      
+      chartData.forEach(r => Object.keys(r).forEach(k => r[k] = r[k].value))
       let items = groupBy(chartData, '大分類')
-      // Object.keys(items).forEach(k => items[k] = countBy(items[k], '事業部'))
       Object.keys(items).forEach(k => items[k] = countBy(items[k], 'jigyoubu'))
       items = showCategories.map(cate => labels.map(label => items[cate][label] || 0))
+      
       return {
         labels,
         datasets: showCategories.map((cate, i) => ({
