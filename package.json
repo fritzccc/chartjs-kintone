@@ -1,28 +1,32 @@
 {
-  "name": "chart",
+  "name": "chartjs-kintone",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "chartjs demo for kintone",
   "scripts": {
-    "build": "webpack",
-    "watch": "webpack --watch"
+    "dev": "webpack --progress --config webpack.dev.js",
+    "prod": "webpack --progress --config webpack.prod.js",
+    "watch": "webpack --progress --watch"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "CHEN",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
     "html-webpack-plugin": "^3.2.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^3.3.6",
+    "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "kintone-utility": "https://github.com/kintone/kintoneUtility.git",
     "chart.js": "^2.8.0",
     "lodash": "^4.17.15",
     "vue": "^2.6.10",
-    "vue-chartjs": "^3.4.2"
+    "vue-chartjs": "^3.4.2",
+    "vuex": "^3.1.1"
   }
 }

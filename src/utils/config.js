@@ -12,7 +12,7 @@ export const backgroundColor = [
   '#007065',
   '#d3f6f3',
   '#ff4463',
-].reverse()
+]
 
 export const categories = [
   '脱Notes',
@@ -28,7 +28,7 @@ export const categories = [
   '内製支援',
   'AI',
   'その他'
-].reverse()
+]
 
 export const labels = [
   '東１',
@@ -58,6 +58,13 @@ export const options = {
     bodyFontSize: 11,
     caretSize: 0,
     itemSort: () => -1,
+    callbacks: {
+      title: (tooltipItems, { datasets }) => {
+        const { index, label } = tooltipItems[0]
+        const sum = datasets.reduce((prev, cur) => prev + cur.data[index], 0)
+        return `${label}: 計 ${sum} 件`;
+      }
+    }
   },
   scales: {
     xAxes: [{
