@@ -9,6 +9,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     chartData: [],
+    dataKeys: null,
     categories: categories.map(cate => ({ title: cate, show: true })),
   },
   getters: {
@@ -18,14 +19,18 @@ export default new Vuex.Store({
         .filter(cate => cate.show)
         .map(cate => cate.title)
     },
-    renderData({ chartData }, { showCategories }) {
+    renderData({ chartData, dataKeys }, { showCategories }) {
       if (!chartData || chartData.length === 0) {
         return [];
       }
 
       const maxIndex = showCategories.length - 1
 
-      chartData.forEach(r => Object.keys(r).forEach(k => r[k] = r[k].value))
+      chartData.forEach(r => dataKeys.forEach(k => {
+        if (r[k] && r[k].hasOwnProperty('value')) {
+          r[k] = r[k].value
+        }
+      }))
       let items = groupBy(chartData, '大分類')
       Object.keys(items).forEach(k => items[k] = countBy(items[k], 'jigyoubu'))
       items = showCategories.map(cate => labels.map(label => items[cate][label] || 0))
@@ -46,6 +51,9 @@ export default new Vuex.Store({
     },
     setChartData(state, data) {
       state.chartData = data
+      if (data.length) {
+        state.dataKeys = Object.keys(data[0])
+      }
     }
   }
 })

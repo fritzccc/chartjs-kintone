@@ -25,6 +25,7 @@ try {
     chart.style.height = '100vh'
     chart.style.width = '90vw'
     chart.style.minWidth = '960px'
+    chart.style.paddingBottom = '30px'
     chart.innerHTML = '<canvas id="chart"></canvas>'
     target.appendChild(chart)
     // fetch all data
