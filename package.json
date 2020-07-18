@@ -24,7 +24,7 @@
   "dependencies": {
     "kintone-utility": "https://github.com/kintone/kintoneUtility.git",
     "chart.js": "^2.8.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "vue": "^2.6.10",
     "vue-chartjs": "^3.4.2",
     "vuex": "^3.1.1"
